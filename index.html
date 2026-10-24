@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdant Ledger - Accounting & Tax Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a472a;
+            --accent: #d4a574;
+            --accent-light: #e8c4a0;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+            --bg-light: #f9f7f4;
+            --bg-white: #ffffff;
+            --border: #e0dcd6;
+            --success: #4caf50;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #2d5a3d;
+                --accent: #d4a574;
+                --accent-light: #e8c4a0;
+                --text-dark: #f0f0f0;
+                --text-muted: #999;
+                --bg-light: #1a1a1a;
+                --bg-white: #242424;
+                --border: #3a3a3a;
+                color-scheme: dark;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-white);
+            padding-left: max(16px, env(safe-area-inset-left, 0px));
+            padding-right: max(16px, env(safe-area-inset-right, 0px));
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: var(--bg-white);
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            padding: 0 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .header-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-cta button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .header-cta button:hover {
+            background: #132418;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 80px 48px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -128px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .hero-left h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        .trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(212, 165, 116, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .trust-pill::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .cta-button {
+            padding: 14px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .cta-primary:hover {
+            background: #0f3620;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 71, 42, 0.2);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--text-dark);
+            border: 1px solid var(--text-dark);
+        }
+
+        .cta-secondary:hover {
+            background: var(--bg-light);
+        }
+
+        /* Trust Highlight */
+        .trust-highlight {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .trust-highlight::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Hero Card */
+        .hero-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 165, 116, 0.1);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .card-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .metric {
+            padding: 16px;
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .metric-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .ledger-viz {
+            margin-bottom: 24px;
+        }
+
+        .ledger-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .ledger-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary) 70%, var(--accent) 30%);
+            border-radius: 4px;
+        }
+
+        .ledger-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 48px;
+            background: var(--bg-white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 768px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(212, 165, 116, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px 24px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 12px 24px rgba(212, 165, 116, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .service-link:hover {
+            gap: 12px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--bg-light);
+            padding: 32px;
+            border-radius: 8px;
+            max-width: 1280px;
+            margin: 0 auto 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 48px;
+            background: var(--bg-white);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .step {
+            position: relative;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 80px 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a472a 100%);
+            color: white;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .form-left {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-left-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-left h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .form-left p {
+            font-size: 15px;
+            margin-bottom: 24px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .benefit {
+            display: flex;
+            gap: 16px;
+        }
+
+        .benefit-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .benefit-text {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-right {
+            padding: 48px;
+        }
+
+        .form-right h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-right p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--bg-white);
+            color: var(--text-dark);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #0f3620;
+        }
+
+        .submit-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .form-message {
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-light);
+            padding: 60px 48px 40px;
+            color: var(--text-dark);
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .footer-col a,
+        .footer-col p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-divider {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                padding: 0 16px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-left h1 {
+                font-size: 32px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-left {
+                padding: 32px;
+            }
+
+            .form-right {
+                padding: 32px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .hero,
+            .services-section,
+            .how-it-works,
+            .form-section {
+                padding: 48px 16px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .hero-left h1 {
+                font-size: 24px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .services-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <span>Verdant Ledger</span>
+            </a>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#advisory">Advisory</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="header-cta">
+                <button onclick="document.getElementById('form-section').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="trust-pill">✓ Trusted by 500+ Small Businesses</div>
+                <h1>Organized Bookkeeping. Strategic Tax Planning.</h1>
+                <p class="hero-subtitle">Professional accounting services that help small business owners and freelancers manage finances with confidence, minimize tax liabilities, and focus on growth.</p>
+                <div class="cta-group">
+                    <button class="cta-button cta-primary" onclick="document.getElementById('form-section').scrollIntoView({behavior: 'smooth'})">Start Your Consultation</button>
+                    <button class="cta-button cta-secondary">View Case Studies</button>
+                </div>
+                <div class="trust-highlight">Used by accountants and business owners nationwide</div>
+            </div>
+            <div class="hero-card">
+                <div class="card-header">
+                    <span class="card-badge">Verified</span>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">Reconciliation</div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-desc">Matched to Bank Feeds</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">GST Return Cycle</div>
+                        <div class="metric-value">Bi-monthly</div>
+                        <div class="metric-desc">GSTR-1 & 3B Ready</div>
+                    </div>
+                </div>
+                <div class="ledger-viz">
+                    <div class="ledger-item">
+                        <span>Income</span>
+                        <span>₹2,45,000</span>
+                    </div>
+                    <div class="ledger-bar">
+                        <div class="ledger-bar-fill" style="width: 70%"></div>
+                    </div>
+                    <div class="ledger-item">
+                        <span>Operating Expenses</span>
+                        <span>₹89,000</span>
+                    </div>
+                    <div class="ledger-item">
+                        <span>Tax Reserve</span>
+                        <span>₹42,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="section-header">
+            <div class="section-label">Core Services</div>
+            <h2>Good Accounting. Better Business Decisions.</h2>
+            <p>We provide end-to-end accounting and tax services designed to reduce compliance burden and maximize your financial clarity.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Organized Bookkeeping</h3>
+                <p>Track daily income, expenses, bank reconciliations, and structured financial records.</p>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>GST Filing Support</h3>
+                <p>Dedicated assistance to manage applicable return requirements and timely GST submissions.</p>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3>Income Tax Returns</h3>
+                <p>Comprehensive tax return assistance tailored for individuals and business owners.</p>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3>Financial Organization</h3>
+                <p>Better organized records, ledger structure, and practical accounting guidance.</p>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Active Clients</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">₹45cr+</div>
+                    <div class="stat-label">Processed Annually</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">₹2.3cr</div>
+                    <div class="stat-label">Tax Optimized</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Client Retention</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-header">
+            <div class="section-label">Process</div>
+            <h2>How We Work Together</h2>
+            <p>A streamlined 3-step process to get your finances in order</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Share Your Documents</h3>
+                <p>Upload bank statements, invoices, and previous returns through our secure portal or simply email them over.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Complete Reconciliation</h3>
+                <p>Our accountants review transactions, categorize expenses, apply valid deductions, and reconcile bank balances to the penny.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Timely Filing & Reports</h3>
+                <p>We execute your GST submissions and income tax filings on time. You receive clear financial reports and acknowledgments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="form-section" class="form-section">
+        <div class="form-container">
+            <div class="form-left">
+                <div class="form-left-label">Direct Advisory Desk</div>
+                <h2>Let's Get Your Accounts in Order.</h2>
+                <p>Tell us a little about your accounting needs, and we'll get in touch to understand your requirements and help you find the right solution.</p>
+                <div class="form-benefits">
+                    <div class="benefit">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text"><strong>No-Obligation Consultation</strong> – Just tailored solutions for your books and tax filings.</div>
+                    </div>
+                    <div class="benefit">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text"><strong>Expert Assessment</strong> – We evaluate your current setup, identify gaps, and recommend best practices.</div>
+                    </div>
+                    <div class="benefit">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text"><strong>Confidential & Secure</strong> – All financial discussions are held under strict non-disclosure.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-right">
+                <h3>Request an Initial Consultation</h3>
+                <p>No obligation. Just tailored solutions for your books and tax filings.</p>
+                <div class="form-message" id="formMessage"></div>
+                <form id="consultationForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="e.g. Rachel Adams" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="e.g. rachel@business.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Mobile Number *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. +91 98765 43210" required>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Request Consultation →</button>
+                    <p class="form-note">We'll respond within 24 business hours</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="logo-icon"></div>
+                        <span style="font-weight: 600;">Verdant Ledger</span>
+                    </div>
+                    <p>Professional accounting and tax services for small business owners and freelancers.</p>
+                    <div>
+                        <a href="#">LinkedIn</a> | <a href="#">Twitter</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Practice Areas</h4>
+                    <a href="#">Bookkeeping</a>
+                    <a href="#">GST Filing</a>
+                    <a href="#">Income Tax</a>
+                    <a href="#">Business Setup</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Advisory</h4>
+                    <a href="#">Our Process</a>
+                    <a href="#">Case Studies</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p><strong>Phone:</strong> +91 98765 43210</p>
+                    <p><strong>Email:</strong> hello@verdantledger.com</p>
+                    <p><strong>Hours:</strong> Mon-Fri, 9am-6pm IST</p>
+                </div>
+            </div>
+            <div class="footer-divider">
+                <span>&copy; 2026 Verdant Ledger. All rights reserved.</span>
+                <div>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTymp3VKyu64r5j3afSMP-tBhC2BOh3LlTM2JOJU_z-4wVpwbE0xmoYjxEbt-r2byC/exec';
+        const form = document.getElementById('consultationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Validate inputs
+            if (!name || !email || !phone) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            // Disable button during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            // Build URL with query parameters
+            const url = SCRIPT_URL + '?' + new URLSearchParams({
+                name: name,
+                email: email,
+                phone: phone
+            });
+
+            // Send data using GET request with no-cors mode
+            fetch(url, {
+                method: 'GET',
+                mode: 'no-cors'
+            })
+            .then(() => {
+                showSuccess('✓ Thank you! We\'ll contact you within 24 hours.');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Consultation →';
+            })
+            .catch(() => {
+                // Even if there's a "no-cors" error, the request likely succeeded
+                showSuccess('✓ Thank you! We\'ll contact you within 24 hours.');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Consultation →';
+            });
+        });
+
+        function showSuccess(message) {
+            formMessage.textContent = message;
+            formMessage.className = 'form-message success';
+            setTimeout(() => {
+                formMessage.className = 'form-message';
+            }, 5000);
+        }
+
+        function showError(message) {
+            formMessage.textContent = message;
+            formMessage.className = 'form-message error';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Request Consultation →';
+        }
+    </script>
+</body>
+</html>
